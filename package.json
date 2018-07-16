@@ -1,0 +1,28 @@
+{
+  "name": "smartservices",
+  "version": "1.0.0",
+  "description": "REST API to support the functionality required by SmarTran and SmarTicket",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blue-ravine/smartservices.git"
+  },
+  "keywords": [
+    "smart",
+    "services"
+  ],
+  "author": "Raghavan Polali",
+  "license": "Internal",
+  "bugs": {
+    "url": "https://github.com/blue-ravine/smartservices/issues"
+  },
+  "homepage": "https://github.com/blue-ravine/smartservices#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mongoose": "^5.2.3"
+  }
+}
