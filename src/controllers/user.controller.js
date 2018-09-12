@@ -1,5 +1,5 @@
 const User = require('../models/user.model');
-const response = require('../models/server.response');
+const response = require('../schemas/api.response');
 
 //Test
 exports.test = function (req, res) {
@@ -8,7 +8,8 @@ exports.test = function (req, res) {
 };
 
 exports.register = function (req, res, next) {
-
+    var newUser = user_create(req);
+    
 };
 
 exports.sign_in = function (req, res, next) {
@@ -34,7 +35,7 @@ exports.user_create = function (req, res, next) {
             return next(err);
         }
         response.message = 'user created';
-        response.data = user;
+        response.User = user;
         res.send(response);
     })
 
@@ -50,11 +51,11 @@ exports.user_details = function (req, res, next) {
         
         if(user) {
             response.message = 'user found';
-            response.data = user;
+            response.User = user;
         }
         else {
             response.message = 'user not found';
-            response.data = '';
+            response.User = '';
         }
         res.send(response);
     })
@@ -70,11 +71,11 @@ exports.user_details_bymobile = function (req, res, next) {
 
         if(user) {
         response.message = 'user found';
-        response.data = user;
+        response.User = user;
         }
         else {
             response.message = 'user not found';
-            response.data = '';
+            response.User = '';
         }
         res.send(response);
     })
@@ -89,11 +90,11 @@ exports.user_update_bymobile = function (req, res, next) {
         }
         if(user) {
             response.message = 'user updated';
-            response.data = user;
+            response.User = user;
             }
             else {
                 response.message = 'user not found';
-                response.data = '';
+                response.User = '';
             }        
 
             res.send(response);
