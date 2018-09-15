@@ -4,6 +4,9 @@ const bodyParser = require('body-parser');
 //Import routes for the user
 const user = require('./src/routes/user.route');
 
+//Import routes for the points of interest
+const poi = require('./src/routes/poi.route');
+
 //initial smart services api
 const app = express();
 
@@ -23,6 +26,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.use('/users', user);
+app.use('/poi', poi);
 
 const port = process.env.PORT || 3036;
 

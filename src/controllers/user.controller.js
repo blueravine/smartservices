@@ -1,5 +1,5 @@
 const User = require('../models/user.model');
-const response = require('../schemas/api.response');
+const response = require('../schemas/api.response.user');
 
 //Test
 exports.test = function (req, res) {
