@@ -4,18 +4,20 @@ const response = require('../schemas/api.response.poi');
 exports.poi_create = function (req, res, next) {
     console.log('creating poi');
 
+    req.body.forEach(element => {
+        
     let poi = new POI({
-        id: req.body.id,
-        code: req.body.code,
-        name: req.body.name,
-        type: req.body.type,
-        subtype: req.body.subtype,
-        lattitude: req.body.lattitude,
-        longitude: req.body.longitude,
-        agencynum: req.body.agencynum,
+        id: element.id,
+        code: element.code,
+        name: element.name,
+        type: element.type,
+        subtype: element.subtype,
+        lattitude: element.lattitude,
+        longitude: element.longitude,
+        agencynum: element.agencynum,
     });
 
-        poi.nearby = req.body.nearby.map( (currentnearby) => {
+        poi.nearby = element.nearby.map( (currentnearby) => {
             return {
                 id: currentnearby.id,
                 code: currentnearby.code,
@@ -27,10 +29,13 @@ exports.poi_create = function (req, res, next) {
         if (err) {
             return next(err);
         }
-        response.message = 'poi created';
-        response.POI = poi;
-        res.send(response);
+        // response.message = 'poi created';
+        // response.POI = poi;
     })
+});
+
+
+res.send('poi created');
 
 };
 
