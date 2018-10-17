@@ -1,5 +1,0 @@
-{
-    "MONGODB_URI": "mongodb://localhost:27017/smartran",
-    "PORT": 3037,
-    "secret": "THIS IS SMARTRAN SECRET KEY"
-}
