@@ -1,5 +1,14 @@
 const User = require('../models/user.model');
 const response = require('../schemas/api.response.user');
+const bcrypt = require('bcrypt');
+const smartjwt = require('../../utils/jwt');
+
+let signOptions = {
+    issuer: "smartservices",
+    subject: "",
+    audience: ""
+    
+};
 
 //Test
 exports.test = function (req, res) {
@@ -27,7 +36,8 @@ exports.user_create = function (req, res, next) {
         name: req.body.name,
         mobile: req.body.mobile,
         countrycode: req.body.countrycode,
-        emailid: req.body.emailid
+        email: req.body.emailid,
+        password_hash: bcrypt.hashSync(req.body.password, 10)
     });
 
     user.save(function (err) {
@@ -35,10 +45,49 @@ exports.user_create = function (req, res, next) {
             return next(err);
         }
         response.message = 'user created';
-        response.User = user;
+        let {password_hash, ...withoutpwdhash} = user.toObject();
+        response.User = withoutpwdhash;
         res.send(response);
     })
 
+};
+
+exports.user_authenticate = function (req, res, next) {
+    console.log('authenticating user');
+
+    User.findOne({"mobile": req.body.mobile}, function (err, user) {
+        if (err) {
+            return next(err);
+        }
+
+        if(user) {
+            console.log('user found authenticating');
+
+            if(bcrypt.compareSync(req.body.password, user.password_hash)){
+                let {password_hash, ...withoutpwdhash} = user.toObject();
+                signOptions.subject=req.body.mobile;
+                signOptions.audience=req.body.jwtaudience;
+                let token = smartjwt.sign({mobile: req.body.mobile},signOptions);
+                console.log('user authenticated');
+                response.message = 'user authenticated';
+                response.User = withoutpwdhash;
+                response.token = token;
+            }
+            else {
+                console.log('password invalid');
+                response.message = 'user authentication failed';
+                response.User = req.body.mobile;
+                response.token = null;
+            }
+
+        }
+        else {
+            response.message = 'user not found';
+            response.User = req.body.mobile;
+            response.token = null;
+        }
+        res.send(response);
+    })
 };
 
 exports.user_details = function (req, res, next) {
@@ -51,39 +100,43 @@ exports.user_details = function (req, res, next) {
         
         if(user) {
             response.message = 'user found';
-            response.User = user;
-        }
+            let {password_hash, ...withoutpwdhash} = user.toObject();
+            response.User = withoutpwdhash;
+            }
         else {
             response.message = 'user not found';
             response.User = '';
         }
         res.send(response);
-    })
+    }).select('-password_hash')
 };
 
 exports.user_details_bymobile = function (req, res, next) {
     console.log('retrieving user by mobile');
 
-    User.findOne({"mobile": req.body.mobile}, function (err, user) {
-        if (err) {
-            return next(err);
-        }
+                User.findOne({"mobile": req.body.mobile}, function (err, user) {
+                    if (err) {
+                        console.log('error while finding user by mobile.');
+                        return next(err);
+                    }
 
-        if(user) {
-        response.message = 'user found';
-        response.User = user;
-        }
-        else {
-            response.message = 'user not found';
-            response.User = '';
-        }
-        res.send(response);
-    })
+                    if(user) {
+                        console.log('found user by mobile.');
+                    response.message = 'user found';
+                    response.User = user;
+                    }
+                    else {
+                        console.log('user not found by mobile.');
+                        response.message = 'user not found';
+                        response.User = '';
+                    }
+                    res.send(response);
+                }).select('-password_hash')
 };
 
 exports.user_update_bymobile = function (req, res, next) {
     console.log('updating user by mobile');
-
+    
     User.findOneAndUpdate({"mobile": req.body.mobile}, {$set: req.body}, function (err, user) {
         if (err) {
             return next(err);
@@ -98,5 +151,5 @@ exports.user_update_bymobile = function (req, res, next) {
             }        
 
             res.send(response);
-    })
+    }).select('-password_hash')
 };

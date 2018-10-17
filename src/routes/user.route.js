@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-
 //Require the controllers
 const user_controller = require('../controllers/user.controller');
 
@@ -8,7 +7,10 @@ const user_controller = require('../controllers/user.controller');
 router.get('/test', user_controller.test);
 
 //create user
-router.post('/create', user_controller.user_create);
+router.post('/register', user_controller.user_create);
+
+//create user
+router.post('/login', user_controller.user_authenticate);
 
 //get user by id
 router.get('/:id', user_controller.user_details);

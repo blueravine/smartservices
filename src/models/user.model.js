@@ -7,13 +7,8 @@ var userSchema = new Schema({
     countrycode: {type: Number, required: false},
     email: {type: String, required: false},
     userid: {type: Number, required: false},
+    password_hash: {type: String, required: true},
     createddate: {type: Date, default: Date.now}
-});
-
-var userAuthSchema = new Schema ({
-    mobile: {type: Number,  required: false},
-    email: {type: String, required: false},
-    password_hash: {type: String, required: false}
 });
 
 module.exports = mongoose.model('User', userSchema);
