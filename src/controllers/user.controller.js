@@ -3,7 +3,7 @@ const response = require('../schemas/api.response.user');
 const bcrypt = require('bcrypt');
 const smartjwt = require('../../utils/jwt');
 
-var signOptions = {
+let signOptions = {
     issuer: "smartservices",
     subject: "",
     audience: ""
@@ -32,7 +32,7 @@ exports.loginRequired = function (req, res, next) {
 exports.user_create = function (req, res, next) {
     console.log('creating user');
 
-    var user = new User({
+    let user = new User({
         name: req.body.name,
         mobile: req.body.mobile,
         countrycode: req.body.countrycode,
@@ -45,7 +45,7 @@ exports.user_create = function (req, res, next) {
             return next(err);
         }
         response.message = 'user created';
-        var {password_hash, ...withoutpwdhash} = user.toObject();
+        let {password_hash, ...withoutpwdhash} = user.toObject();
         response.User = withoutpwdhash;
         res.send(response);
     })

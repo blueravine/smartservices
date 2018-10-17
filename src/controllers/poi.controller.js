@@ -6,7 +6,7 @@ exports.poi_create = function (req, res, next) {
 
     req.body.forEach(element => {
         
-    var poi = new POI({
+    let poi = new POI({
         id: element.id,
         code: element.code,
         name: element.name,

@@ -15,7 +15,7 @@ const app = express();
 //set up MongoDB connection with mongoose
 const mongoose = require('mongoose');
 
-const db_url = 'mongodb://localhost:27017/smartran';
+let db_url = 'mongodb://localhost:27017/smartran';
 const mongoDB = process.env.MONGODB_URI || config.MONGODB_URI || db_url;
 
 mongoose.connect(mongoDB, {useNewUrlParser: true} );
@@ -24,7 +24,7 @@ mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-var signOptions = {
+let signOptions = {
     issuer: "smartservices",
     subject: "",
     audience: ""

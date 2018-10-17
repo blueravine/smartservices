@@ -1,7 +1,7 @@
 const jwt   = require('jsonwebtoken');
 const config = require('../config.json');
 
-var secret = config.secret;
+let secret = config.secret;
 
 module.exports = {
   getToken: (req, res, next) => {
@@ -24,7 +24,7 @@ module.exports = {
 
   sign: (payload, $Options) => {
   // Token signing options
-  var signOptions = {
+  let signOptions = {
       issuer:  $Options.issuer,
       subject:  $Options.subject,
       audience:  $Options.audience,
@@ -37,7 +37,7 @@ module.exports = {
 
 verify: (token, $Option) => {
 
-  var verifyOptions = {
+  let verifyOptions = {
       issuer:  $Option.issuer,
       subject:  $Option.subject,
       audience:  $Option.audience,
