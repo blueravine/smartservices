@@ -101,6 +101,18 @@ exports.user_authenticate = function (req, res, next) {
     })
 };
 
+exports.user_verify_token = function (req, res, next) {
+
+                console.log('user token is valid.');
+                response.status=200;
+                response.message = 'jwt token valid';
+                response.User = req.body.mobile;
+                response.token = req.token;
+        
+        res.status(response.status).send(response);
+    
+};
+
 exports.user_details = function (req, res, next) {
     console.log('retrieving user');
 

@@ -12,6 +12,9 @@ router.post('/register', user_controller.user_create);
 //create user
 router.post('/login', user_controller.user_authenticate);
 
+//verify user token
+router.post('/token/verify', user_controller.user_verify_token);
+
 //get user by id
 router.get('/:id', user_controller.user_details);
 

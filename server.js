@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const config = require('./config.json');
 const smartjwt = require('./utils/jwt');
+const response = require('./src/schemas/api.response.user');
+
 
 //Import routes for the user
 const user = require('./src/routes/user.route');
@@ -55,9 +57,9 @@ const verifyToken = function (req, res, next) {
         }
         else {
         response.status=403;
-        response.message = 'Error while verifying token!';
-        response.User=null;
-        response.token=null;
+        response.message = 'Token not valid!';
+        response.User = req.body.mobile;
+        response.token = req.token;
     
         res.status(response.status).send(response);
         }
