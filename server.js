@@ -54,7 +54,12 @@ const verifyToken = function (req, res, next) {
             next();
         }
         else {
-             res.sendStatus(403);
+        response.status=403;
+        response.message = 'Error while verifying token!';
+        response.User=null;
+        response.token=null;
+    
+        res.status(response.status).send(response);
         }
 }
 
@@ -76,12 +81,24 @@ app.use('/poi', poi);
 
 app.use(function (req, res, next) {
     console.log("Cannot find RESTful resource!");
-    res.sendStatus(404);
+
+    response.status=404;
+    response.message = 'Cannot find RESTful resource!';
+    response.User=null;
+    response.token=null;
+
+    res.status(response.status).send(response);
   });
 
 app.use(function (err, req, res, next) {
 console.error(err.stack);
-res.sendStatus(500);
+
+response.status=500;
+response.message = 'Internal Server Error!';
+response.User=null;
+response.token=null;
+
+res.status(response.status).send(response);
 });
 
 const port = process.env.PORT || config.PORT || 3036;

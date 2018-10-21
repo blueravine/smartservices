@@ -18,7 +18,13 @@ module.exports = {
       }
       else{
         console.log('error while getting token.');
-        res.sendStatus(403);
+
+        response.status=403;
+        response.message = 'Error while getting token!';
+        response.User=null;
+        response.token=null;
+    
+        res.status(response.status).send(response);
       }
   },
 

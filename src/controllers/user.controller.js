@@ -13,7 +13,11 @@ let signOptions = {
 //Test
 exports.test = function (req, res) {
     console.log('Hello there!');
-    res.send('Hello!');
+    response.status=200;
+    response.message = 'Hello!';
+    response.User=null;
+    response.token=null;
+    res.status(response.status).send(response);
 };
 
 exports.register = function (req, res, next) {
@@ -42,13 +46,16 @@ exports.user_create = function (req, res, next) {
 
     user.save(function (err) {
         if (err) {
+            console.log('error while creating user' + err);
             return next(err);
         }
+        console.log('user created');
         response.message = 'user created';
         let {password_hash, ...withoutpwdhash} = user.toObject();
+        response.status=200;
         response.User = withoutpwdhash;
         response.token = null;
-        res.send(response);
+        res.status(response.status).send(response);
     })
 
 };
@@ -70,12 +77,14 @@ exports.user_authenticate = function (req, res, next) {
                 signOptions.audience=req.body.jwtaudience;
                 let token = smartjwt.sign({mobile: req.body.mobile},signOptions);
                 console.log('user authenticated');
+                response.status=200;
                 response.message = 'user authenticated';
                 response.User = withoutpwdhash;
                 response.token = token;
             }
             else {
                 console.log('password invalid');
+                response.status=200;
                 response.message = 'user authentication failed';
                 response.User = req.body.mobile;
                 response.token = null;
@@ -83,11 +92,12 @@ exports.user_authenticate = function (req, res, next) {
 
         }
         else {
+            response.status=200;
             response.message = 'user not found';
             response.User = req.body.mobile;
             response.token = null;
         }
-        res.send(response);
+        res.status(response.status).send(response);
     })
 };
 
@@ -100,15 +110,19 @@ exports.user_details = function (req, res, next) {
         }
         
         if(user) {
+            response.status=200;
             response.message = 'user found';
             let {password_hash, ...withoutpwdhash} = user.toObject();
             response.User = withoutpwdhash;
+            response.token=null;
             }
         else {
+            response.status=200;
             response.message = 'user not found';
-            response.User = '';
+            response.User = null;
+            response.token=null;
         }
-        res.send(response);
+        res.status(response.status).send(response);
     }).select('-password_hash')
 };
 
@@ -123,15 +137,19 @@ exports.user_details_bymobile = function (req, res, next) {
 
                     if(user) {
                         console.log('found user by mobile.');
+                    response.status=200;
                     response.message = 'user found';
                     response.User = user;
+                    response.token=null;
                     }
                     else {
                         console.log('user not found by mobile.');
+                        response.status=200;
                         response.message = 'user not found';
-                        response.User = '';
+                        response.User = null;
+                        response.token=null;
                     }
-                    res.send(response);
+                    res.status(response.status).send(response);
                 }).select('-password_hash')
 };
 
@@ -143,14 +161,18 @@ exports.user_update_bymobile = function (req, res, next) {
             return next(err);
         }
         if(user) {
+            response.status=200;
             response.message = 'user updated';
             response.User = user;
+            response.token=null;
             }
             else {
+                response.status=200;
                 response.message = 'user not found';
-                response.User = '';
+                response.User = null;
+                response.token=null;
             }        
 
-            res.send(response);
+            res.status(response.status).send(response);
     }).select('-password_hash')
 };
