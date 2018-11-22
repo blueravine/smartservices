@@ -68,7 +68,7 @@ exports.user_authenticate = function (req, res, next) {
 
             if(bcrypt.compareSync(req.body.password, user.password_hash)){
                 let {password_hash, ...withoutpwdhash} = user.toObject();
-                signOptions.subject=req.body.mobile;
+                signOptions.subject=req.body.mobile.toString();
                 signOptions.audience=req.body.jwtaudience;
                 let token = smartjwt.sign({mobile: req.body.mobile},signOptions);
                 console.log('user authenticated');
