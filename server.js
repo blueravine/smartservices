@@ -4,7 +4,6 @@ const config = require('./config.json');
 const smartjwt = require('./utils/jwt');
 const response = require('./src/schemas/api.response.user');
 
-
 //Import routes for the user
 const user = require('./src/routes/user.route');
 
@@ -42,6 +41,7 @@ app.use(smartjwt.getToken.unless({
                 '/user/register',
                 '/user/login',
                 '/user/mobile',
+                '/user/test',
                 '/poi/create',
                 '/poi/:id',
                 '/poi/name'
@@ -71,6 +71,7 @@ app.use(verifyToken.unless({
             '/user/register',
             '/user/login',
             '/user/mobile',
+            '/user/test',
             '/poi/create',
             '/poi/:id',
             '/poi/name'
