@@ -208,7 +208,7 @@ exports.user_fav_add = function (req, res, next) {
     userFav.favstops.push(userFavToStop);
     userFav.favroutes.push(userFavRoute);
 
-    user.save(function (err) {
+    userFav.save(function (err) {
         if (err) {
             console.log('error while creating user' + err);
             return next(err);
