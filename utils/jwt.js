@@ -1,5 +1,6 @@
 const jwt   = require('jsonwebtoken');
 const config = require('../config.json');
+const response = require('../src/schemas/api.response.user');
 
 let secret = config.secret;
 

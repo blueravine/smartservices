@@ -8,3 +8,5 @@ var apiResponse = Schema({
     token: {type: String},
     createddate: {type: Date, default: Date.now}
 });
+
+module.exports.apiResponse = apiResponse;
