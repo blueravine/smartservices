@@ -1,7 +1,7 @@
 const User = require('../models/user.model');
-const UserFavs = require('../models/user.model');
-const UserFavStop = require('../models/user.model');
-const UserFavRoute = require('../models/user.model');
+// const UserFavs = require('../models/user.model');
+// const UserFavStop = require('../models/user.model');
+// const UserFavRoute = require('../models/user.model');
 const response = require('../schemas/api.response.user');
 const bcrypt = require('bcrypt');
 const smartjwt = require('../../utils/jwt');
@@ -184,42 +184,42 @@ exports.user_update_bymobile = function (req, res, next) {
     }).select('-password_hash')
 };
 
-exports.user_fav_add = function (req, res, next) {
-    console.log('adding user favorite');
+// exports.user_fav_add = function (req, res, next) {
+//     console.log('adding user favorite');
 
-    let userFavFromStop = new UserFavStop({
-        name: req.body.from
-    });
+//     let userFavFromStop = new UserFavStop({
+//         name: req.body.from
+//     });
 
-    let userFavToStop = new UserFavStop({
-        name: req.body.to
-    });
+//     let userFavToStop = new UserFavStop({
+//         name: req.body.to
+//     });
 
-    let userFavRoute = new UserFavRoute({
-        name: req.body.from,
-        to: req.body.to
-    });
+//     let userFavRoute = new UserFavRoute({
+//         name: req.body.from,
+//         to: req.body.to
+//     });
 
-    let userFav = new UserFavs({
-        mobile: req.body.mobile,
-    });
+//     let userFav = new UserFavs({
+//         mobile: req.body.mobile,
+//     });
 
-    userFav.favstops.push(userFavFromStop);
-    userFav.favstops.push(userFavToStop);
-    userFav.favroutes.push(userFavRoute);
+//     userFav.favstops.push(userFavFromStop);
+//     userFav.favstops.push(userFavToStop);
+//     userFav.favroutes.push(userFavRoute);
 
-    userFav.save(function (err) {
-        if (err) {
-            console.log('error while creating user' + err);
-            return next(err);
-        }
-        console.log('user created');
-        response.message = 'user created';
-        let {password_hash, ...withoutpwdhash} = user.toObject();
-        response.status=200;
-        response.User = withoutpwdhash;
-        response.token = null;
-        res.status(response.status).send(response);
-    })
+//     userFav.save(function (err) {
+//         if (err) {
+//             console.log('error while creating user' + err);
+//             return next(err);
+//         }
+//         console.log('user created');
+//         response.message = 'user created';
+//         let {password_hash, ...withoutpwdhash} = user.toObject();
+//         response.status=200;
+//         response.User = withoutpwdhash;
+//         response.token = null;
+//         res.status(response.status).send(response);
+//     })
 
-};
+// };
