@@ -9,4 +9,4 @@ var apiResponse = Schema({
     createddate: {type: Date, default: Date.now}
 });
 
-module.exports.response = apiResponse;
+// module.exports.response = apiResponse;
